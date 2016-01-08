@@ -41,19 +41,17 @@ $GLOBALS['TL_DCA']['tl_form_field']['palettes']['__selector__'][] = 'useCity';
 $GLOBALS['TL_DCA']['tl_form_field']['palettes']['__selector__'][] = 'useState';
 $GLOBALS['TL_DCA']['tl_form_field']['palettes']['__selector__'][] = 'useZip';
 $GLOBALS['TL_DCA']['tl_form_field']['palettes']['__selector__'][] = 'useCountry';
-$GLOBALS['TL_DCA']['tl_form_field']['palettes']['__selector__'][] = 'useLatLong';
 
 $GLOBALS['TL_DCA']['tl_form_field']['palettes']['adresspicker'] = '
 {type_legend},type,name,label;
-{places_legend},placeholder,category,bounds,componentRestrictions,callback;
+{places_legend},placeholder,category,bounds,componentRestrictions, componentRestrictions_locality,callback;
 {input_legend:hide},useStreet,useCity,useState,useZip,useCountry,useLatLong';
 
-$GLOBALS['TL_DCA']['tl_form_field']['subpalettes']['useStreet'] = 'useStreet_type,useStreet_hidden';
-$GLOBALS['TL_DCA']['tl_form_field']['subpalettes']['useCity'] = 'useCity_type,useCity_hidden';
-$GLOBALS['TL_DCA']['tl_form_field']['subpalettes']['useState'] = 'useState_type,useState_hidden';
-$GLOBALS['TL_DCA']['tl_form_field']['subpalettes']['useZip'] = 'useZip_type,useZip_hidden';
-$GLOBALS['TL_DCA']['tl_form_field']['subpalettes']['useCountry'] = 'useCountry_type,useCountry_hidden';
-$GLOBALS['TL_DCA']['tl_form_field']['subpalettes']['useLatLong'] = 'useLatLong_type,useLatLong_hidden';
+$GLOBALS['TL_DCA']['tl_form_field']['subpalettes']['useStreet'] = 'useStreet_type';
+$GLOBALS['TL_DCA']['tl_form_field']['subpalettes']['useCity'] = 'useCity_type';
+$GLOBALS['TL_DCA']['tl_form_field']['subpalettes']['useState'] = 'useState_type';
+$GLOBALS['TL_DCA']['tl_form_field']['subpalettes']['useZip'] = 'useZip_type';
+$GLOBALS['TL_DCA']['tl_form_field']['subpalettes']['useCountry'] = 'useCountry_type';
 
 $GLOBALS['TL_DCA']['tl_form_field']['fields']['category'] = array
 (
@@ -79,7 +77,7 @@ $GLOBALS['TL_DCA']['tl_form_field']['fields']['componentRestrictions'] = array
     'label'     => &$GLOBALS['TL_LANG']['tl_form_field']['componentRestrictions'],
     'exclude'   => true,
     'inputType' => 'adresspicker',
-    'eval'      => array('helpwizard'=>true, 'category' => '(regions)', 'tl_class'=>'w50', 'callback' => 'function bla(a){console.log(a)}'),
+    'eval'      => array('helpwizard'=>true, 'callback' => 'function(a){console.log(a.getPlace())}', 'category' => '(regions)', 'tl_class'=>'w50', 'use_locality' => true, 'use_locality_type' => 'long_name'),
     'sql'       => "varchar(255) NOT NULL default ''"
 );
 
@@ -92,18 +90,18 @@ $GLOBALS['TL_DCA']['tl_form_field']['fields']['callback'] = array
     'sql'       => "varchar(255) NOT NULL default ''"
 );
 
-$GLOBALS['TL_DCA']['tl_form_field']['fields']['useStreet'] = array
+$GLOBALS['TL_DCA']['tl_form_field']['fields']['use_route'] = array
 (
-	'label'                   => &$GLOBALS['TL_LANG']['tl_form_field']['useStreet'],
+	'label'                   => &$GLOBALS['TL_LANG']['tl_form_field']['useRoute'],
 	'exclude'                 => true,
 	'inputType'               => 'checkbox',
 	'eval'                    => array('submitOnChange' => true, 'tl_class'=>'clr'),
 	'sql'                     => "char(1) NOT NULL default ''"
 );
 
-$GLOBALS['TL_DCA']['tl_form_field']['fields']['useStreet_type'] = array
+$GLOBALS['TL_DCA']['tl_form_field']['fields']['use_route_type'] = array
 (
-    'label'     => &$GLOBALS['TL_LANG']['tl_form_field']['useStreet_type'],
+    'label'     => &$GLOBALS['TL_LANG']['tl_form_field']['useRoute_type'],
     'exclude'   => true,
     'inputType' => 'select',
     'options'   => array('long_name','short_name'),
@@ -111,27 +109,18 @@ $GLOBALS['TL_DCA']['tl_form_field']['fields']['useStreet_type'] = array
     'sql'       => "varchar(255) NOT NULL default ''"
 );
 
-$GLOBALS['TL_DCA']['tl_form_field']['fields']['useStreet_hidden'] = array
+$GLOBALS['TL_DCA']['tl_form_field']['fields']['use_street_number'] = array
 (
-	'label'                   => &$GLOBALS['TL_LANG']['tl_form_field']['useStreet_hidden'],
-	'exclude'                 => true,
-	'inputType'               => 'checkbox',
-	'eval'                    => array('tl_class'=>'w50'),
-	'sql'                     => "char(1) NOT NULL default ''"
-);
-
-$GLOBALS['TL_DCA']['tl_form_field']['fields']['useCity'] = array
-(
-	'label'                   => &$GLOBALS['TL_LANG']['tl_form_field']['useCity'],
+	'label'                   => &$GLOBALS['TL_LANG']['tl_form_field']['useStreet_number'],
 	'exclude'                 => true,
 	'inputType'               => 'checkbox',
 	'eval'                    => array('submitOnChange' => true, 'tl_class'=>'clr'),
 	'sql'                     => "char(1) NOT NULL default ''"
 );
 
-$GLOBALS['TL_DCA']['tl_form_field']['fields']['useCity_type'] = array
+$GLOBALS['TL_DCA']['tl_form_field']['fields']['use_street_number_type'] = array
 (
-    'label'     => &$GLOBALS['TL_LANG']['tl_form_field']['useCity_type'],
+    'label'     => &$GLOBALS['TL_LANG']['tl_form_field']['useStreet_number_type'],
     'exclude'   => true,
     'inputType' => 'select',
     'options'   => array('long_name','short_name'),
@@ -139,27 +128,37 @@ $GLOBALS['TL_DCA']['tl_form_field']['fields']['useCity_type'] = array
     'sql'       => "varchar(255) NOT NULL default ''"
 );
 
-$GLOBALS['TL_DCA']['tl_form_field']['fields']['useCity_hidden'] = array
+$GLOBALS['TL_DCA']['tl_form_field']['fields']['use_locality'] = array
 (
-	'label'                   => &$GLOBALS['TL_LANG']['tl_form_field']['useCity_hidden'],
-	'exclude'                 => true,
-	'inputType'               => 'checkbox',
-	'eval'                    => array('tl_class'=>'w50'),
-	'sql'                     => "char(1) NOT NULL default ''"
-);
-
-$GLOBALS['TL_DCA']['tl_form_field']['fields']['useState'] = array
-(
-	'label'                   => &$GLOBALS['TL_LANG']['tl_form_field']['useState'],
+	'label'                   => &$GLOBALS['TL_LANG']['tl_form_field']['use_locality'],
 	'exclude'                 => true,
 	'inputType'               => 'checkbox',
 	'eval'                    => array('submitOnChange' => true, 'tl_class'=>'clr'),
 	'sql'                     => "char(1) NOT NULL default ''"
 );
 
-$GLOBALS['TL_DCA']['tl_form_field']['fields']['useState_type'] = array
+$GLOBALS['TL_DCA']['tl_form_field']['fields']['use_locality_type'] = array
 (
-    'label'     => &$GLOBALS['TL_LANG']['tl_form_field']['useState_type'],
+    'label'     => &$GLOBALS['TL_LANG']['tl_form_field']['use_locality_type'],
+    'exclude'   => true,
+    'inputType' => 'select',
+    'options'   => array('long_name','short_name'),
+    'eval'      => array('helpwizard'=>true, 'tl_class'=>' clr w50'),
+    'sql'       => "varchar(255) NOT NULL default ''"
+);
+
+$GLOBALS['TL_DCA']['tl_form_field']['fields']['use_administrative_area_level_1'] = array
+(
+	'label'                   => &$GLOBALS['TL_LANG']['tl_form_field']['use_administrative_area_level_1'],
+	'exclude'                 => true,
+	'inputType'               => 'checkbox',
+	'eval'                    => array('submitOnChange' => true, 'tl_class'=>'clr'),
+	'sql'                     => "char(1) NOT NULL default ''"
+);
+
+$GLOBALS['TL_DCA']['tl_form_field']['fields']['use_administrative_area_level_1_type'] = array
+(
+    'label'     => &$GLOBALS['TL_LANG']['tl_form_field']['use_administrative_area_level_1_type'],
     'exclude'   => true,
     'inputType' => 'select',
     'options'   => array('long_name','short_name'),
@@ -167,27 +166,18 @@ $GLOBALS['TL_DCA']['tl_form_field']['fields']['useState_type'] = array
     'sql'       => "varchar(255) NOT NULL default ''"
 );
 
-$GLOBALS['TL_DCA']['tl_form_field']['fields']['useState_hidden'] = array
+$GLOBALS['TL_DCA']['tl_form_field']['fields']['use_country'] = array
 (
-	'label'                   => &$GLOBALS['TL_LANG']['tl_form_field']['useState_hidden'],
-	'exclude'                 => true,
-	'inputType'               => 'checkbox',
-	'eval'                    => array('tl_class'=>'w50'),
-	'sql'                     => "char(1) NOT NULL default ''"
-);
-
-$GLOBALS['TL_DCA']['tl_form_field']['fields']['useZip'] = array
-(
-	'label'                   => &$GLOBALS['TL_LANG']['tl_form_field']['useZip'],
+	'label'                   => &$GLOBALS['TL_LANG']['tl_form_field']['use_country'],
 	'exclude'                 => true,
 	'inputType'               => 'checkbox',
 	'eval'                    => array('submitOnChange' => true, 'tl_class'=>'clr'),
 	'sql'                     => "char(1) NOT NULL default ''"
 );
 
-$GLOBALS['TL_DCA']['tl_form_field']['fields']['useZip_type'] = array
+$GLOBALS['TL_DCA']['tl_form_field']['fields']['use_country_type'] = array
 (
-    'label'     => &$GLOBALS['TL_LANG']['tl_form_field']['useZip_type'],
+    'label'     => &$GLOBALS['TL_LANG']['tl_form_field']['use_country_type'],
     'exclude'   => true,
     'inputType' => 'select',
     'options'   => array('long_name','short_name'),
@@ -195,27 +185,18 @@ $GLOBALS['TL_DCA']['tl_form_field']['fields']['useZip_type'] = array
     'sql'       => "varchar(255) NOT NULL default ''"
 );
 
-$GLOBALS['TL_DCA']['tl_form_field']['fields']['useZip_hidden'] = array
+$GLOBALS['TL_DCA']['tl_form_field']['fields']['use_postal_code'] = array
 (
-	'label'                   => &$GLOBALS['TL_LANG']['tl_form_field']['useZip_hidden'],
-	'exclude'                 => true,
-	'inputType'               => 'checkbox',
-	'eval'                    => array('tl_class'=>'w50'),
-	'sql'                     => "char(1) NOT NULL default ''"
-);
-
-$GLOBALS['TL_DCA']['tl_form_field']['fields']['useCountry'] = array
-(
-	'label'                   => &$GLOBALS['TL_LANG']['tl_form_field']['useCountry'],
+	'label'                   => &$GLOBALS['TL_LANG']['tl_form_field']['use_postal_code'],
 	'exclude'                 => true,
 	'inputType'               => 'checkbox',
 	'eval'                    => array('submitOnChange' => true, 'tl_class'=>'clr'),
 	'sql'                     => "char(1) NOT NULL default ''"
 );
 
-$GLOBALS['TL_DCA']['tl_form_field']['fields']['useCountry_type'] = array
+$GLOBALS['TL_DCA']['tl_form_field']['fields']['use_postal_code_type'] = array
 (
-    'label'     => &$GLOBALS['TL_LANG']['tl_form_field']['useCountry_type'],
+    'label'     => &$GLOBALS['TL_LANG']['tl_form_field']['use_postal_code_type'],
     'exclude'   => true,
     'inputType' => 'select',
     'options'   => array('long_name','short_name'),
@@ -223,42 +204,15 @@ $GLOBALS['TL_DCA']['tl_form_field']['fields']['useCountry_type'] = array
     'sql'       => "varchar(255) NOT NULL default ''"
 );
 
-$GLOBALS['TL_DCA']['tl_form_field']['fields']['useCountry_hidden'] = array
+$GLOBALS['TL_DCA']['tl_form_field']['fields']['use_lat_long'] = array
 (
-	'label'                   => &$GLOBALS['TL_LANG']['tl_form_field']['useCountry_hidden'],
-	'exclude'                 => true,
-	'inputType'               => 'checkbox',
-	'eval'                    => array('tl_class'=>'w50'),
-	'sql'                     => "char(1) NOT NULL default ''"
-);
-
-$GLOBALS['TL_DCA']['tl_form_field']['fields']['useLatLong'] = array
-(
-	'label'                   => &$GLOBALS['TL_LANG']['tl_form_field']['useLatLong'],
+	'label'                   => &$GLOBALS['TL_LANG']['tl_form_field']['use_lat_long'],
 	'exclude'                 => true,
 	'inputType'               => 'checkbox',
 	'eval'                    => array('submitOnChange' => true, 'tl_class'=>'clr'),
 	'sql'                     => "char(1) NOT NULL default ''"
 );
 
-$GLOBALS['TL_DCA']['tl_form_field']['fields']['useLatLong_type'] = array
-(
-    'label'     => &$GLOBALS['TL_LANG']['tl_form_field']['useLatLong_type'],
-    'exclude'   => true,
-    'inputType' => 'select',
-    'options'   => array('long_name','short_name'),
-    'eval'      => array('helpwizard'=>true, 'tl_class'=>'clr w50'),
-    'sql'       => "varchar(255) NOT NULL default ''"
-);
-
-$GLOBALS['TL_DCA']['tl_form_field']['fields']['useLatLong_hidden'] = array
-(
-	'label'                   => &$GLOBALS['TL_LANG']['tl_form_field']['useLatLong_hidden'],
-	'exclude'                 => true,
-	'inputType'               => 'checkbox',
-	'eval'                    => array('tl_class'=>'w50'),
-	'sql'                     => "char(1) NOT NULL default ''"
-);
 /*
 class tl_form_field_datepicker extends Backend
 {

@@ -14,14 +14,13 @@
  */
 class AdresspickerField extends \TextField
 {
-    protected $options = array();
-
 	/**
 	 * Template
 	 * @var string
 	 */
 	protected $strTemplate = 'be_widget';
-
+    public $options = array();
+    public $useFields = array();
 
 	/**
 	 * @param array $arrAttributes
@@ -48,25 +47,22 @@ class AdresspickerField extends \TextField
 			case 'bounds':
 			case 'componentRestrictions':
 			case 'callback':
-			case 'useStreet':
-			case 'useStreet_type':
-			case 'useStreet_hidden':
-			case 'useCity':
-			case 'useCity_type':
-			case 'useCity_hidden':
-			case 'useState':
-			case 'useState_type':
-			case 'useState_hidden':
-			case 'useZip':
-			case 'useZip_type':
-			case 'useZip_hidden':
-			case 'useCountry':
-			case 'useCountry_type':
-			case 'useCountry_hidden':
-			case 'useLatLong':
-			case 'useLatLong_type':
-			case 'useLatLong_hidden':
+            case 'use_route_type':
+            case 'use_street_number_type':
+            case 'use_locality_type':
+            case 'use_administrative_area_level_1_type':
+            case 'use_country_type':
+			case 'use_postal_code_type':
+			case 'use_lat_long':
                 $this->options[$strKey] = $varValue;
+                break;
+			case 'use_route':
+			case 'use_street_number':
+			case 'use_locality':
+			case 'use_administrative_area_level_1':
+			case 'use_country':
+            case 'use_postal_code':
+                $this->useFields[substr($strKey, 4)] = $varValue;
                 break;
 			default:
 				parent::__set($strKey, $varValue);
@@ -120,13 +116,12 @@ class AdresspickerField extends \TextField
               if(!google)return
 
               var options = {
-                %s
-                %s
-                %s
+                %s%s%s
               }
 
               var a = new google.maps.places.Autocomplete(document.getElementById("ctrl_%s"), options)
               a.addListener("place_changed", function(){
+                %s
                 %s
               })
             })()
@@ -141,9 +136,43 @@ class AdresspickerField extends \TextField
                   new google.maps.LatLng(' . $b[1][0] . ',' . $b[1][1] . ')
                 )' : '',
             $this->strId,
-            isset($this->options['callback']) ? '('.$this->options['callback'].')(a)' : ''
+            isset($this->options['callback']) ? '('.$this->options['callback'].')(a)' : '',
+            $this->getCodeToFillAdressInUsedInputs()
 
         );
 
     }
+
+    private function getCodeToFillAdressInUsedInputs(){
+
+        // if nothing is needed return
+        if(empty($this->useFields) && !isset($this->options['use_lat_long']))return '';
+    
+        foreach($this->useFields as $key => &$value){
+            $value = $this->options['use_'.$key.'_type'];
+        }
+
+        $str = empty($this->useFields) ? '' : '
+                for (var i = 0; i < place.address_components.length; i++) {
+                  addressType = place.address_components[i].types[0];
+                  if (componentForm[addressType]) {
+                    document.getElementById("ctrl_'.$this->strId.'_" + addressType).value = place.address_components[i][componentForm[addressType]]
+                  }
+                }';
+
+        return sprintf('
+                var place = a.getPlace(), addressType, componentForm = %s
+                %s
+                %s',
+                json_encode($this->useFields),
+                $str,
+                isset($this->options['use_lat_long']) ? '
+                    document.getElementById("ctrl_'.$this->strId.'_lat").value = place.geometry.location.lat()
+                    document.getElementById("ctrl_'.$this->strId.'_long").value = place.geometry.location.long()' : ''
+        );
+
+
+
+    }
+
 }
