@@ -15,7 +15,7 @@
 class AdresspickerField extends \TextField
 {
     protected $options = array();
-    
+
 	/**
 	 * Template
 	 * @var string
@@ -29,7 +29,7 @@ class AdresspickerField extends \TextField
 	public function __construct($arrAttributes=null)
 	{
 		parent::__construct($arrAttributes);
-        
+
         array_unshift($GLOBALS['TL_JAVASCRIPT'],'https://maps.googleapis.com/maps/api/js?key=AIzaSyCTzc9PNH252fKi7Qdyg63wymXK2OXr4V4&libraries=places');
 	}
 
@@ -82,6 +82,14 @@ class AdresspickerField extends \TextField
 	public function generate()
 	{
 
+        // callback can change all options
+        if (isset($GLOBALS['TL_HOOKS']['adresspickerField']) && is_array($GLOBALS['TL_HOOKS']['adresspickerField'])) {
+            foreach ($GLOBALS['TL_HOOKS']['formDatepickerField'] as $callback) {
+                $objCallback = (method_exists($callback[0], 'getInstance') ? call_user_func(array($callback[0], 'getInstance')) : new $callback[0]());
+                $arrConfig = $objCallback->$callback[1]($this);
+            }
+        }
+
         return sprintf('<input type="text" name="%s" id="ctrl_%s" class="tl_text%s"%s onfocus="Backend.getScrollOffset()">%s%s',
                         $this->strName,
                         $this->strId,
@@ -94,7 +102,7 @@ class AdresspickerField extends \TextField
 
 
     public function getScriptTag(){
-    
+
         // shortcut for props
         $b = null;
         if($this->options['bounds']){
@@ -134,7 +142,7 @@ class AdresspickerField extends \TextField
                 )' : '',
             $this->strId,
             isset($this->options['callback']) ? '('.$this->options['callback'].')(a)' : ''
-    
+
         );
 
     }
