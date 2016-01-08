@@ -27,7 +27,7 @@
  */
 
 
-class FormAdresspickerField extends FormTextField
+class FormAddresspickerField extends FormTextField
 {
     /**
      * Template
@@ -35,7 +35,7 @@ class FormAdresspickerField extends FormTextField
      * @var string
      */
     //protected $strTemplate = 'form_adresspicker';
-    protected $strTemplate = 'form_adresspicker';
+    protected $strTemplate = 'form_addresspicker';
     private $options = array();
 
     public function __construct($arrAttributes = null)
@@ -50,7 +50,7 @@ class FormAdresspickerField extends FormTextField
     {
 
         // callback can change all options
-        if (isset($GLOBALS['TL_HOOKS']['formAdresspickerField']) && is_array($GLOBALS['TL_HOOKS']['formAdresspickerField'])) {
+        if (isset($GLOBALS['TL_HOOKS']['formAddresspickerField']) && is_array($GLOBALS['TL_HOOKS']['formAddresspickerField'])) {
             foreach ($GLOBALS['TL_HOOKS']['formAdresspickerField'] as $callback) {
                 $objCallback = (method_exists($callback[0], 'getInstance') ? call_user_func(array($callback[0], 'getInstance')) : new $callback[0]());
                 $arrConfig = $objCallback->$callback[1]($this);

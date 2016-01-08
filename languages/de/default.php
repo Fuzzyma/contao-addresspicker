@@ -30,6 +30,4 @@
 /**
  * Form fields
  */
-$GLOBALS['BE_FFL']['addresspicker'] = 'AddresspickerField';
-$GLOBALS['TL_FFL']['addresspicker'] = 'FormAddresspickerField';
-
+$GLOBALS['TL_LANG']['FFL']['addresspicker'] = array('Adressauswahl', 'Adress-Autovervollständigung mit google');

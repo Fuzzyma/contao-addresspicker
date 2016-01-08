@@ -12,7 +12,7 @@
 /**
  * Provide methods to handle adresspicker fields.
  */
-class AdresspickerField extends \TextField
+class AddresspickerField extends \TextField
 {
 	/**
 	 * Template
@@ -79,7 +79,7 @@ class AdresspickerField extends \TextField
 	{
 
         // callback can change all options
-        if (isset($GLOBALS['TL_HOOKS']['adresspickerField']) && is_array($GLOBALS['TL_HOOKS']['adresspickerField'])) {
+        if (isset($GLOBALS['TL_HOOKS']['addresspickerField']) && is_array($GLOBALS['TL_HOOKS']['addresspickerField'])) {
             foreach ($GLOBALS['TL_HOOKS']['formDatepickerField'] as $callback) {
                 $objCallback = (method_exists($callback[0], 'getInstance') ? call_user_func(array($callback[0], 'getInstance')) : new $callback[0]());
                 $arrConfig = $objCallback->$callback[1]($this);

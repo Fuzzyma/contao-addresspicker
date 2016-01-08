@@ -16,11 +16,11 @@
  */
 ClassLoader::addClasses(array
 (
-	'FormAdresspickerField' => 'system/modules/adresspicker/FormAdresspickerField.php',
-	'AdresspickerField' => 'system/modules/adresspicker/AdresspickerField.php',
+	'FormAddresspickerField' => 'system/modules/addresspicker/FormAddresspickerField.php',
+	'AddresspickerField' => 'system/modules/addresspicker/AddresspickerField.php',
 ));
 
 TemplateLoader::addFiles(array
 (
-    'form_adresspicker' => 'system/modules/adresspicker/templates'
+    'form_addresspicker' => 'system/modules/addresspicker/templates'
 ));

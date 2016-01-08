@@ -1,16 +1,16 @@
-# contao-adresspicker
+# contao-addresspicker
 Contao Wrapper for google places autocomplete.
 
 Comes with a widget for Backend and Frontend.
 
-For Backend use specify `adresspicker` in the dca:
+For Backend use specify `addresspicker` in the dca:
 
 ```php
 $GLOBALS['TL_DCA']['tl_form_field']['fields']['componentRestrictions'] = array
 (
     'label'     => &$GLOBALS['TL_LANG']['tl_form_field']['componentRestrictions'],
     'exclude'   => true,
-    'inputType' => 'adresspicker',
+    'inputType' => 'addresspicker',
     'eval'      => array('category' => '(regions)', 'tl_class'=>'w50'}'),
     'sql'       => "varchar(255) NOT NULL default ''"
 );
@@ -29,6 +29,7 @@ You can pass the following options to eval:
     - use_administrative_area_level_1
     - use_country
     - use_postal_code
+    - use_lat_long
 - a type to every use-field to specify `long_name` or `short_name`
     - use_route_type
     - use_street_number_type
@@ -46,7 +47,7 @@ $GLOBALS['TL_DCA']['tl_form_field']['fields']['componentRestrictions'] = array
 (
     'label'     => &$GLOBALS['TL_LANG']['tl_form_field']['componentRestrictions'],
     'exclude'   => true,
-    'inputType' => 'adresspicker',
+    'inputType' => 'addresspicker',
     'eval'      => array(
         'callback'          => 'function(a){console.log(a.getPlace())}',
         'category'          => '(regions)',

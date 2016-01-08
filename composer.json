@@ -1,7 +1,7 @@
 {
-    "name":"fuzzyma/contao-adresspicker",
+    "name":"fuzzyma/contao-addresspicker",
     "description":"Frontend Text Field with Bootstrap Datepicker for Contao Open Source CMS",
-    "keywords":["contao", "Google Places Autocomplete", "Address Field", "Adresspicker"],
+    "keywords":["contao", "Google Places Autocomplete", "Address Field", "Addresspicker"],
     "type":"contao-module",
     "license":"LGPL-3.0+",
     "authors":[
@@ -17,7 +17,7 @@
     "extra":{
         "contao": {
             "sources":{
-                "": "system/modules/adresspicker"
+                "": "system/modules/addresspicker"
             }
         }
     }

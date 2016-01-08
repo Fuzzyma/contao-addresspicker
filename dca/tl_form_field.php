@@ -42,7 +42,7 @@ $GLOBALS['TL_DCA']['tl_form_field']['palettes']['__selector__'][] = 'useState';
 $GLOBALS['TL_DCA']['tl_form_field']['palettes']['__selector__'][] = 'useZip';
 $GLOBALS['TL_DCA']['tl_form_field']['palettes']['__selector__'][] = 'useCountry';
 
-$GLOBALS['TL_DCA']['tl_form_field']['palettes']['adresspicker'] = '
+$GLOBALS['TL_DCA']['tl_form_field']['palettes']['addresspicker'] = '
 {type_legend},type,name,label;
 {places_legend},placeholder,category,bounds,componentRestrictions, componentRestrictions_locality,callback;
 {input_legend:hide},useStreet,useCity,useState,useZip,useCountry,useLatLong';
@@ -76,7 +76,7 @@ $GLOBALS['TL_DCA']['tl_form_field']['fields']['componentRestrictions'] = array
 (
     'label'     => &$GLOBALS['TL_LANG']['tl_form_field']['componentRestrictions'],
     'exclude'   => true,
-    'inputType' => 'adresspicker',
+    'inputType' => 'addresspicker',
     'eval'      => array('helpwizard'=>true),
     'sql'       => "varchar(255) NOT NULL default ''"
 );

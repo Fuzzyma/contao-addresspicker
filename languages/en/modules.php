@@ -28,8 +28,7 @@
 
 
 /**
- * Form fields
+ * Extension folder
  */
-$GLOBALS['BE_FFL']['addresspicker'] = 'AddresspickerField';
-$GLOBALS['TL_FFL']['addresspicker'] = 'FormAddresspickerField';
+$GLOBALS['TL_LANG']['MOD']['addresspicker'] = array('Adress Picker', 'Adress autocomplete with google');
 
