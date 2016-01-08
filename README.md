@@ -1,4 +1,4 @@
-# contao-bootstrap-datepicker
+# contao-adresspicker
 Contao Wrapper for google places autocomplete.
 
 Comes with a widget for Backend and Frontend.
@@ -38,7 +38,7 @@ You can pass the following options to eval:
     - use_postal_code_type
 
 Make sure you have corresponding fields in your dca.
-The fieldname is [name of the adresspicker]_[name of the field without use].
+The fieldname has to be `[name of the adresspicker]_[name of the field without use]`.
 e.g. `componentRestrictions_locality`
 
 ```php
