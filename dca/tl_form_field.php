@@ -77,7 +77,7 @@ $GLOBALS['TL_DCA']['tl_form_field']['fields']['componentRestrictions'] = array
     'label'     => &$GLOBALS['TL_LANG']['tl_form_field']['componentRestrictions'],
     'exclude'   => true,
     'inputType' => 'adresspicker',
-    'eval'      => array('helpwizard'=>true, 'callback' => 'function(a){console.log(a.getPlace())}', 'category' => '(regions)', 'tl_class'=>'w50', 'use_locality' => true, 'use_locality_type' => 'long_name'),
+    'eval'      => array('helpwizard'=>true),
     'sql'       => "varchar(255) NOT NULL default ''"
 );
 
