@@ -86,10 +86,11 @@ class AddresspickerField extends \TextField
             }
         }
 
-        return sprintf('<input type="text" name="%s" id="ctrl_%s" class="tl_text%s"%s onfocus="Backend.getScrollOffset()">%s%s',
+        return sprintf('<input type="text" name="%s" id="ctrl_%s" class="tl_text%s" value="%s"%s onfocus="Backend.getScrollOffset()">%s%s',
                         $this->strName,
                         $this->strId,
                         (($this->strClass != '') ? ' ' . $this->strClass : ''),
+                        specialchars($this->varValue),
                         $this->getAttributes(),
                         $this->wizard,
                         $this->getScriptTag());
@@ -103,7 +104,7 @@ class AddresspickerField extends \TextField
         $b = null;
         if($this->options['bounds']){
             $latLong = explode(';',$this->options['bounds']);
-            $b = [explode(';',trim($latLong[0])), explode(';',trim($latLong[1]))];
+            $b = [explode(',',trim($latLong[0])), explode(',',trim($latLong[1]))];
         }
 
         $c = $this->options['category'];
@@ -136,7 +137,7 @@ class AddresspickerField extends \TextField
                   new google.maps.LatLng(' . $b[1][0] . ',' . $b[1][1] . ')
                 )' : '',
             $this->strId,
-            isset($this->options['callback']) ? '('.$this->options['callback'].')(a)' : '',
+            isset($this->options['callback']) ? '('.$this->options['callback'].')(a, "ctrl_'.$this->strId.'")' : '',
             $this->getCodeToFillAdressInUsedInputs()
 
         );
@@ -167,8 +168,8 @@ class AddresspickerField extends \TextField
                 json_encode($this->useFields),
                 $str,
                 isset($this->options['use_lat_long']) ? '
-                    document.getElementById("ctrl_'.$this->strId.'_lat").value = place.geometry.location.lat()
-                    document.getElementById("ctrl_'.$this->strId.'_long").value = place.geometry.location.long()' : ''
+                document.getElementById("ctrl_'.$this->strId.'_lat").value = place.geometry.location.lat()
+                document.getElementById("ctrl_'.$this->strId.'_long").value = place.geometry.location.long()' : ''
         );
 
 
