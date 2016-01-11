@@ -90,7 +90,7 @@ class FormAddresspickerField extends FormTextField
             }
         }
 
-        return sprintf('<input type="text" name="%s" id="ctrl_%s" class="text%s"%s> value="%s"%s%s',
+        return sprintf('<input type="text" name="%s" id="ctrl_%s" class="text%s" value="%s"%s>%s%s',
                         $this->strName,
                         $this->strId,
                         (($this->strClass != '') ? ' ' . $this->strClass : ''),
