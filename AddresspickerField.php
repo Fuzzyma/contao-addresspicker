@@ -169,7 +169,7 @@ class AddresspickerField extends \TextField
                 $str,
                 isset($this->options['use_lat_long']) ? '
                 document.getElementById("ctrl_'.$this->strId.'_lat").value = place.geometry.location.lat()
-                document.getElementById("ctrl_'.$this->strId.'_long").value = place.geometry.location.long()' : ''
+                document.getElementById("ctrl_'.$this->strId.'_long").value = place.geometry.location.lng()' : ''
         );
 
 
