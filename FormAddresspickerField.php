@@ -40,16 +40,16 @@ class FormAddresspickerField extends FormTextField
 
     public function __construct($arrAttributes = null)
     {
-    
+
         parent::__construct($arrAttributes);
-        
+
         array_unshift($GLOBALS['TL_JAVASCRIPT'], 'https://maps.googleapis.com/maps/api/js?key=AIzaSyCTzc9PNH252fKi7Qdyg63wymXK2OXr4V4&libraries=places');
     }
-    
+
 	public function __set($strKey, $varValue)
 	{
         if($varValue == '') return;
-    
+
 		switch ($strKey)
 		{
 			case 'category':
@@ -81,6 +81,10 @@ class FormAddresspickerField extends FormTextField
 
     public function generate()
     {
+
+        if(!$this->strId){
+            $this->strId = $this->strName;
+        }
 
         // callback can change all options
         if (isset($GLOBALS['TL_HOOKS']['formAddresspickerField']) && is_array($GLOBALS['TL_HOOKS']['formAddresspickerField'])) {
@@ -151,7 +155,7 @@ class FormAddresspickerField extends FormTextField
 
         // if nothing is needed return
         if(empty($this->useFields) && !isset($this->options['use_lat_long']))return '';
-    
+
         foreach($this->useFields as $key => &$value){
             $value = $this->options['use_'.$key.'_type'];
         }
